@@ -22,6 +22,12 @@
     <!-- imports libraries to import fbx animations -->
     <script src="../build/three.js"></script>
     
+    <!-- need these for my shape -->
+    <script src="js/controls/OrbitControls.js"></script>
+    <script src="js/QuickHull.js"></script>
+    <script src="js/geometries/ConvexGeometry.js"></script>
+    <!-- end of what i added -->
+    
     <script src="js/loaders/OBJLoader.js"></script>
 
     <script src="js/libs/inflate.min.js"></script>
@@ -458,7 +464,8 @@
 geometry = new THREE.ConvexGeometry( points );
 material = new THREE.MeshNormalMaterial({shading: THREE.FlatShading});
 mesh = new THREE.Mesh(geometry, material);
-scene.add(mesh);
+mesh.scale.x = mesh.scale.y = mesh.scale.z = 0.02;
+arWorldRoot.add(mesh);
 
         
         ///////////////////////////////////////////////////////////
@@ -500,46 +507,46 @@ scene.add(mesh);
          //add obj model (static)
          // obj texture
 
-         var manager = new THREE.LoadingManager();
-         manager.onProgress = function ( item, loaded, total ) {
+//          var manager = new THREE.LoadingManager();
+//          manager.onProgress = function ( item, loaded, total ) {
 
-             console.log( item, loaded, total );
+//              console.log( item, loaded, total );
 
-         };
+//          };
 
-         var textureLoader = new THREE.TextureLoader( manager );
-         var texture = textureLoader.load( '../../data/data/UV_Grid_Sm.jpg' );
+//          var textureLoader = new THREE.TextureLoader( manager );
+//          var texture = textureLoader.load( '../../data/data/UV_Grid_Sm.jpg' );
 
-         // obj model
-         var onProgress = function ( xhr ) {
-             if ( xhr.lengthComputable ) {
-                 var percentComplete = xhr.loaded / xhr.total * 100;
-                 console.log( Math.round(percentComplete, 2) + '% downloaded' );
-             }
-         };
+//          // obj model
+//          var onProgress = function ( xhr ) {
+//              if ( xhr.lengthComputable ) {
+//                  var percentComplete = xhr.loaded / xhr.total * 100;
+//                  console.log( Math.round(percentComplete, 2) + '% downloaded' );
+//              }
+//          };
 
-         var onError = function ( xhr ) {
-         };
+//          var onError = function ( xhr ) {
+//          };
 
-         var loader = new THREE.OBJLoader( manager );
-         loader.load( '../../data/data/male02/male02.obj', function ( object ) {
+//          var loader = new THREE.OBJLoader( manager );
+//          loader.load( '../../data/data/male02/male02.obj', function ( object ) {
 
-             object.traverse( function ( child ) {
+//              object.traverse( function ( child ) {
 
-                 if ( child instanceof THREE.Mesh ) {
+//                  if ( child instanceof THREE.Mesh ) {
 
-                     child.material.map = texture;
+//                      child.material.map = texture;
 
-                 }
+//                  }
 
-             } );
+//              } );
 
- //					object.position.y = - 95;
- //					scene.add( object );
-             object.scale.set(.02, .02, .02);
-             arWorldRoot.add( object );
+//  //					object.position.y = - 95;
+//  //					scene.add( object );
+//              object.scale.set(.02, .02, .02);
+//              arWorldRoot.add( object );
 
-         }, onProgress, onError );
+//          }, onProgress, onError );
 
          //end obj code
         ///////////////////////////////////////////////////////////
